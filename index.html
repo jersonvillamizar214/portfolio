@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jerson Villamizar — Developer Portfolio</title>
+<meta name="description" content="Full-stack developer portfolio: 10 production projects covering REST APIs, advanced SQL, NoSQL, real-time IoT, applied AI (RAG), serverless and DevOps.">
+<style>
+  :root{
+    --bg:#020617; --surface:#0f172a; --surface2:#1e293b; --line:rgba(255,255,255,.08);
+    --text:#e2e8f0; --muted:#94a3b8; --dim:#64748b; --accent:#38bdf8; --accent2:#818cf8;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);min-height:100vh;
+       font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.6;
+       -webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  /* Hero */
+  header{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  header::before{content:"";position:absolute;inset:0;
+    background:radial-gradient(60% 120% at 50% -10%, rgba(56,189,248,.14), transparent 60%);
+    pointer-events:none}
+  .hero{padding:80px 0 64px;text-align:center;position:relative}
+  .eyebrow{display:inline-block;font-size:13px;color:var(--accent);letter-spacing:.08em;
+    text-transform:uppercase;font-weight:600;margin-bottom:18px}
+  h1{font-size:clamp(34px,6vw,56px);line-height:1.05;letter-spacing:-.03em;margin:0 0 18px;font-weight:800}
+  h1 .grad{background:linear-gradient(120deg,var(--accent),var(--accent2));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .lead{font-size:clamp(16px,2.4vw,19px);color:var(--muted);max-width:640px;margin:0 auto 28px}
+  .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:12px;
+    font-weight:600;font-size:15px;transition:.15s;border:1px solid transparent}
+  .btn-primary{background:var(--accent);color:#020617}
+  .btn-primary:hover{background:#7dd3fc}
+  .btn-ghost{border-color:var(--line);color:var(--text)}
+  .btn-ghost:hover{background:rgba(255,255,255,.04)}
+  .stats{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;margin-top:44px}
+  .stat b{display:block;font-size:26px;font-weight:800;letter-spacing:-.02em}
+  .stat span{font-size:13px;color:var(--dim)}
+
+  /* Filters */
+  .filters{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:44px 0 8px}
+  .chip{padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);
+    color:var(--muted);font-size:13px;cursor:pointer;transition:.15s;font-weight:500}
+  .chip:hover{color:var(--text)}
+  .chip.active{background:var(--accent);color:#020617;border-color:var(--accent);font-weight:600}
+
+  /* Grid */
+  main{padding:16px 0 48px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;margin-top:24px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px;
+    display:flex;flex-direction:column;transition:.18s;position:relative}
+  .card:hover{transform:translateY(-3px);border-color:rgba(56,189,248,.4);
+    box-shadow:0 12px 40px -12px rgba(56,189,248,.15)}
+  .cat{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:10px}
+  .card h3{margin:0 0 8px;font-size:19px;font-weight:700;letter-spacing:-.01em}
+  .card p{margin:0 0 16px;font-size:14px;color:var(--muted);flex:1}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+  .tag{font-size:11px;padding:3px 9px;border-radius:7px;background:var(--surface2);
+    color:var(--muted);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .links{display:flex;gap:10px}
+  .lk{flex:1;text-align:center;padding:9px 12px;border-radius:10px;font-size:13px;font-weight:600;transition:.15s}
+  .lk-live{background:rgba(56,189,248,.12);color:var(--accent)}
+  .lk-live:hover{background:rgba(56,189,248,.22)}
+  .lk-code{border:1px solid var(--line);color:var(--muted)}
+  .lk-code:hover{color:var(--text);background:rgba(255,255,255,.03)}
+  .star{position:absolute;top:18px;right:18px;font-size:11px;color:#020617;background:linear-gradient(120deg,var(--accent),var(--accent2));
+    padding:3px 9px;border-radius:999px;font-weight:700}
+
+  /* DevOps note */
+  .devops{margin:8px 0 8px;background:linear-gradient(120deg,rgba(56,189,248,.06),rgba(129,140,248,.06));
+    border:1px solid var(--line);border-radius:18px;padding:24px}
+  .devops h3{margin:0 0 6px;font-size:17px}
+  .devops p{margin:0;color:var(--muted);font-size:14px}
+
+  footer{border-top:1px solid var(--line);padding:32px 0;text-align:center;color:var(--dim);font-size:14px}
+  footer a{color:var(--muted)}
+  footer a:hover{color:var(--text)}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap hero">
+    <span class="eyebrow">Full-stack Developer</span>
+    <h1>Jerson Villamizar<br><span class="grad">10 production projects, deployed &amp; live</span></h1>
+    <p class="lead">From REST APIs and advanced SQL to real-time IoT, applied AI and edge serverless — each project is live, tested, and shipped with CI/CD.</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="https://github.com/jersonvillamizar214" target="_blank" rel="noopener">View GitHub ↗</a>
+      <a class="btn btn-ghost" href="#projects">Explore projects ↓</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>10</b><span>live projects</span></div>
+      <div class="stat"><b>4</b><span>databases (SQL · NoSQL · Vector)</span></div>
+      <div class="stat"><b>100%</b><span>green CI pipelines</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="filters" id="filters"></div>
+</div>
+
+<main class="wrap" id="projects">
+  <div class="grid" id="grid"></div>
+
+  <div class="devops" style="margin-top:28px">
+    <h3>⚙️ CI/CD across every repository</h3>
+    <p>Every project ships with a GitHub Actions pipeline — lint, type-check, tests and a Docker image build. Two go further and spin up real databases in CI to verify SQL invariants and transactional guarantees (no overselling under concurrency). Every badge is green.</p>
+  </div>
+</main>
+
+<footer class="wrap">
+  Built &amp; deployed on Vercel, Cloudflare, Neon, MongoDB Atlas and Upstash — all free tier.<br>
+  <a href="https://github.com/jersonvillamizar214" target="_blank" rel="noopener">github.com/jersonvillamizar214</a>
+</footer>
+
+<script>
+  const GH = "https://github.com/jersonvillamizar214/";
+  const projects = [
+    { cat:"AI", star:"Capstone", name:"Northwind Ops", repo:"northwind-ops",
+      live:"https://northwind-ops-javf.vercel.app",
+      desc:"Full-stack operations platform: KPI dashboard from aggregated SQL, inventory CRUD, ACID transactional sales (no overselling under concurrency), a real-time SSE feed and an AI assistant grounded in live data.",
+      tags:["Next.js","PostgreSQL","ACID","SSE","Groq"] },
+    { cat:"AI", name:"RAG Chat Assistant", repo:"rag-chat-assistant",
+      live:"https://rag-chat-assistant-javf.vercel.app",
+      desc:"Enterprise assistant that answers only from company docs. Semantic search over pgvector, grounded generation, cited sources — and it refuses to answer when the info isn't there.",
+      tags:["pgvector","Gemini","Groq","RAG"] },
+    { cat:"Data", name:"Advanced SQL Sales", repo:"sales-system-sql",
+      live:"https://sales-system-sql-javf.vercel.app",
+      desc:"Sales system focused on advanced PostgreSQL: normalized schema, and analytics with CTEs, window functions and multi-table JOINs — shown running live on a SQL Insights page.",
+      tags:["PostgreSQL","CTEs","Window fns","Prisma"] },
+    { cat:"Data", name:"NoSQL Catalog", repo:"nosql-catalog",
+      live:"https://nosql-catalog-javf.vercel.app",
+      desc:"MongoDB documents with a different schema per category, plus a Redis cache you can measure in the UI (~75× faster). Answers the SQL-vs-NoSQL question with a working system.",
+      tags:["MongoDB","Redis","cache-aside"] },
+    { cat:"Data", name:"KPI Dashboard", repo:"kpi-dashboard",
+      live:"https://kpi-dashboard-javf.vercel.app",
+      desc:"Business analytics dashboard with KPIs, trends and category breakdowns, rendered with hand-built accessible SVG charts — no chart library.",
+      tags:["Next.js","SVG charts","dataviz"] },
+    { cat:"AI", name:"Algorithms & Big O", repo:"algorithms-visualizer",
+      live:"https://algorithms-visualizer-javf.vercel.app",
+      desc:"Sorting, pathfinding (BFS/Dijkstra/A*) and data structures from scratch, with Big O measured — not quoted. 54 tests assert the complexity classes empirically.",
+      tags:["TypeScript","Vitest","algorithms"] },
+    { cat:"IoT", name:"IoT MQTT Monitor", repo:"iot-mqtt-monitor",
+      live:"https://iot-mqtt-monitor-javf.vercel.app",
+      desc:"Real-time industrial monitoring over MQTT: the browser subscribes to plant telemetry via WebSockets, with live trends and threshold alarms.",
+      tags:["MQTT","WebSockets","real-time"] },
+    { cat:"Infra", name:"Serverless URL Shortener", repo:"serverless-url-shortener",
+      live:"https://serverless-url-shortener.jersonvillamizar214.workers.dev",
+      desc:"Runs entirely at the edge on Cloudflare Workers: KV for redirects, D1 (serverless SQLite) for analytics written after the response via ctx.waitUntil(), and SSRF-safe validation.",
+      tags:["Cloudflare","Workers","KV","D1"] },
+    { cat:"Backend", name:"JWT Auth Dashboard", repo:"jwt-auth-dashboard",
+      live:"https://jwt-auth-dashboard-javf.vercel.app",
+      desc:"Full-stack authentication: register/login with a role-based protected dashboard. JWT access/refresh tokens in httpOnly cookies, bcrypt hashing, server-side revocation.",
+      tags:["Next.js","JWT","bcrypt","Prisma"] },
+    { cat:"Backend", name:"REST API · JWT", repo:"rest-api-jwt-auth",
+      live:"https://rest-api-jwt-auth-javf.vercel.app",
+      desc:"Production-ready REST API with JWT authentication and a layered architecture — with an interactive playground so you can exercise the endpoints from the browser.",
+      tags:["Express","TypeScript","JWT","Prisma"] },
+  ];
+
+  const cats = ["All", ...Array.from(new Set(projects.map(p => p.cat)))];
+  const grid = document.getElementById("grid");
+  const filters = document.getElementById("filters");
+
+  function render(filter){
+    grid.innerHTML = "";
+    projects.filter(p => filter === "All" || p.cat === filter).forEach(p => {
+      const el = document.createElement("article");
+      el.className = "card";
+      el.innerHTML =
+        (p.star ? '<span class="star">'+p.star+'</span>' : '') +
+        '<div class="cat">'+p.cat+'</div>' +
+        '<h3>'+p.name+'</h3>' +
+        '<p>'+p.desc+'</p>' +
+        '<div class="tags">'+p.tags.map(t=>'<span class="tag">'+t+'</span>').join('')+'</div>' +
+        '<div class="links">' +
+          '<a class="lk lk-live" href="'+p.live+'" target="_blank" rel="noopener">Live demo ↗</a>' +
+          '<a class="lk lk-code" href="'+GH+p.repo+'" target="_blank" rel="noopener">Code</a>' +
+        '</div>';
+      grid.appendChild(el);
+    });
+  }
+
+  cats.forEach((c,i) => {
+    const b = document.createElement("button");
+    b.className = "chip" + (i===0 ? " active" : "");
+    b.textContent = c;
+    b.onclick = () => {
+      document.querySelectorAll(".chip").forEach(x=>x.classList.remove("active"));
+      b.classList.add("active");
+      render(c);
+    };
+    filters.appendChild(b);
+  });
+
+  render("All");
+</script>
+</body>
+</html>
