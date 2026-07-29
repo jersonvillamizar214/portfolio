@@ -6,11 +6,10 @@
 <title>Jerson Villamizar — Software Engineer</title>
 <meta name="description" content="Software engineer portfolio: 10 production projects across REST APIs, advanced SQL, NoSQL, real-time systems, applied AI and serverless — all live and tested.">
 <script>
-  // Set theme before first paint to avoid a flash.
   (function(){
-    var saved = localStorage.getItem("theme");
-    var sys = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
-    document.documentElement.setAttribute("data-theme", saved || sys);
+    var t = localStorage.getItem("theme");
+    var sysDark = matchMedia("(prefers-color-scheme: dark)").matches;
+    document.documentElement.setAttribute("data-theme", t || (sysDark ? "dark" : "light"));
   })();
 </script>
 <style>
@@ -35,7 +34,6 @@
   .mono{font-family:ui-monospace,SFMono-Regular,"JetBrains Mono",Menlo,Consolas,monospace}
   .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
 
-  /* Top bar */
   .topbar{border-bottom:1px solid var(--border);position:sticky;top:0;z-index:20;
     background:color-mix(in srgb, var(--bg) 88%, transparent);backdrop-filter:blur(8px)}
   .topbar .row{display:flex;align-items:center;justify-content:space-between;height:60px}
@@ -43,6 +41,11 @@
   .monogram{width:30px;height:30px;border:1px solid var(--border-strong);border-radius:7px;
     display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--accent)}
   .top-actions{display:flex;align-items:center;gap:8px}
+  .lang{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--surface)}
+  .lang button{border:0;background:transparent;color:var(--muted);font-size:12px;font-weight:700;
+    padding:7px 10px;cursor:pointer;transition:.15s}
+  .lang button.on{background:var(--accent);color:var(--accent-ink)}
+  .lang button:not(.on):hover{color:var(--text)}
   .icon-btn{width:36px;height:36px;border:1px solid var(--border);border-radius:8px;background:var(--surface);
     color:var(--muted);display:grid;place-items:center;cursor:pointer;transition:.15s}
   .icon-btn:hover{color:var(--text);border-color:var(--border-strong)}
@@ -50,16 +53,14 @@
     font-weight:600;color:var(--text);transition:.15s}
   .ghost-link:hover{background:var(--hover);border-color:var(--border-strong)}
 
-  /* Hero */
   .hero{padding:64px 0 40px;display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:center}
   @media (max-width:640px){ .hero{grid-template-columns:1fr;text-align:center;justify-items:center;padding:48px 0 32px} }
   .avatar{width:118px;height:118px;border-radius:50%;overflow:hidden;flex-shrink:0;
     border:1px solid var(--border-strong);background:var(--surface-2);position:relative}
   .avatar img{width:100%;height:100%;object-fit:cover;display:block}
-  .avatar .fallback{position:absolute;inset:0;display:grid;place-items:center;
-    font-size:38px;font-weight:700;color:var(--muted)}
+  .avatar .fallback{position:absolute;inset:0;display:grid;place-items:center;font-size:38px;font-weight:700;color:var(--muted)}
   .hero-name{font-size:clamp(30px,5vw,44px);line-height:1.05;letter-spacing:-.03em;margin:0;font-weight:800}
-  .hero-role{margin:8px 0 0;color:var(--accent);font-weight:650;font-size:15px;letter-spacing:.01em}
+  .hero-role{margin:8px 0 0;color:var(--accent);font-weight:650;font-size:15px}
   .hero-role .sep{color:var(--dim);margin:0 8px}
   .hero-lead{margin:14px 0 0;color:var(--muted);font-size:16px;max-width:600px}
   .hero-cta{margin-top:20px;display:flex;gap:10px;flex-wrap:wrap}
@@ -71,9 +72,8 @@
   .btn-outline{border-color:var(--border-strong);color:var(--text)}
   .btn-outline:hover{background:var(--hover)}
 
-  /* Meta strip */
   .metrics{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);
-    border-radius:12px;overflow:hidden;background:var(--surface);margin:8px 0 8px}
+    border-radius:12px;overflow:hidden;background:var(--surface);margin:8px 0}
   @media (max-width:640px){ .metrics{grid-template-columns:repeat(2,1fr)} }
   .metric{padding:18px 20px;border-right:1px solid var(--border)}
   .metric:last-child{border-right:0}
@@ -81,7 +81,6 @@
   .metric b{display:block;font-size:22px;font-weight:750;letter-spacing:-.02em}
   .metric span{font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:.05em}
 
-  /* Section header */
   .sec-head{display:flex;align-items:baseline;justify-content:space-between;margin:44px 0 4px;gap:16px;flex-wrap:wrap}
   .sec-head h2{font-size:19px;font-weight:700;margin:0;letter-spacing:-.01em}
   .sec-head .note{font-size:13px;color:var(--dim)}
@@ -91,7 +90,6 @@
   .chip:hover{color:var(--text);border-color:var(--border-strong)}
   .chip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 
-  /* Grid */
   main{padding:8px 0 40px}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px;margin-top:18px}
   .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;
@@ -104,12 +102,11 @@
   .card-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px}
   .cat{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
   .flag{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);
-    border:1px solid var(--accent);border-radius:5px;padding:2px 7px}
+    border:1px solid var(--accent);border-radius:5px;padding:2px 7px;white-space:nowrap}
   .card h3{margin:0 0 7px;font-size:17px;font-weight:700;letter-spacing:-.01em}
   .card p{margin:0 0 15px;font-size:13.5px;color:var(--muted);flex:1}
   .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
-  .tag{font-size:11px;padding:3px 8px;border-radius:6px;background:var(--surface-2);
-    color:var(--muted);border:1px solid var(--border)}
+  .tag{font-size:11px;padding:3px 8px;border-radius:6px;background:var(--surface-2);color:var(--muted);border:1px solid var(--border)}
   .links{display:flex;gap:8px}
   .lk{flex:1;text-align:center;padding:8px 12px;border-radius:8px;font-size:13px;font-weight:600;transition:.15s}
   .lk-live{background:var(--accent);color:var(--accent-ink)}
@@ -117,7 +114,6 @@
   .lk-code{border:1px solid var(--border-strong);color:var(--text)}
   .lk-code:hover{background:var(--hover)}
 
-  /* DevOps note */
   .devops{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;
     display:flex;gap:16px;align-items:flex-start}
   .devops .k{font-size:22px;line-height:1}
@@ -136,10 +132,11 @@
   <div class="wrap row">
     <div class="brand"><span class="monogram mono">JV</span> Jerson Villamizar</div>
     <div class="top-actions">
-      <a class="ghost-link" href="https://github.com/jersonvillamizar214" target="_blank" rel="noopener">GitHub</a>
-      <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme" title="Cambiar tema">
-        <svg id="ic-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-      </button>
+      <div class="lang mono" id="lang">
+        <button data-lang="en">EN</button>
+        <button data-lang="es">ES</button>
+      </div>
+      <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme" title="Theme"></button>
     </div>
   </div>
 </div>
@@ -152,27 +149,22 @@
     </div>
     <div>
       <h1 class="hero-name">Jerson Villamizar</h1>
-      <p class="hero-role">Software Engineer <span class="sep">/</span> Full-stack &amp; Backend</p>
-      <p class="hero-lead">I build and ship production systems end to end — REST &amp; serverless APIs, relational and NoSQL data, real-time services and applied AI. Every project below is live, tested and deployed with CI/CD.</p>
+      <p class="hero-role"><span id="role-title"></span><span class="sep">/</span><span id="role-sub"></span></p>
+      <p class="hero-lead" id="lead"></p>
       <div class="hero-cta">
-        <a class="btn btn-primary" href="#projects">View projects</a>
+        <a class="btn btn-primary" id="btn-view" href="#projects"></a>
         <a class="btn btn-outline" href="https://github.com/jersonvillamizar214" target="_blank" rel="noopener">GitHub ↗</a>
       </div>
     </div>
   </div>
 
-  <div class="metrics">
-    <div class="metric"><b>10</b><span>Live projects</span></div>
-    <div class="metric"><b>4</b><span>Data engines</span></div>
-    <div class="metric"><b>100%</b><span>Green CI</span></div>
-    <div class="metric"><b>0</b><span>Paid infra</span></div>
-  </div>
+  <div class="metrics" id="metrics"></div>
 </header>
 
 <section class="wrap" id="projects">
   <div class="sec-head">
-    <h2>Projects</h2>
-    <span class="note">Each card links to a live demo and the source.</span>
+    <h2 id="sec-title"></h2>
+    <span class="note" id="sec-note"></span>
   </div>
   <div class="filters" id="filters"></div>
 </section>
@@ -183,22 +175,185 @@
   <div class="devops">
     <div class="k mono">CI</div>
     <div>
-      <h3>Continuous integration on every repository</h3>
-      <p>Each project ships a GitHub Actions pipeline: lint, type-check, tests and a Docker image build. Two spin up real databases in CI to verify SQL invariants and transactional guarantees — no overselling under concurrency. Every badge is green.</p>
+      <h3 id="devops-title"></h3>
+      <p id="devops-text"></p>
     </div>
   </div>
 </main>
 
 <footer>
   <div class="wrap row">
-    <span>Deployed on Vercel · Cloudflare · Neon · MongoDB Atlas · Upstash — free tier.</span>
+    <span id="footer-text"></span>
     <a href="https://github.com/jersonvillamizar214" target="_blank" rel="noopener" class="mono">github.com/jersonvillamizar214</a>
   </div>
 </footer>
 
 <script>
-  // ---- Theme toggle ----
+  // ---------- i18n ----------
+  const T = {
+    en: {
+      roleTitle:"Software Engineer", roleSub:"Full-stack & Backend",
+      lead:"I build and ship production systems end to end — REST & serverless APIs, relational and NoSQL data, real-time services and applied AI. Every project below is live, tested and deployed with CI/CD.",
+      view:"View projects",
+      metrics:[["10","Live projects"],["4","Data engines"],["100%","Green CI"],["0","Paid infra"]],
+      secTitle:"Projects", secNote:"Each card links to a live demo and the source.",
+      all:"All", live:"Live demo ↗", code:"Code",
+      devTitle:"Continuous integration on every repository",
+      devText:"Each project ships a GitHub Actions pipeline: lint, type-check, tests and a Docker image build. Two spin up real databases in CI to verify SQL invariants and transactional guarantees — no overselling under concurrency. Every badge is green.",
+      footer:"Deployed on Vercel · Cloudflare · Neon · MongoDB Atlas · Upstash — free tier."
+    },
+    es: {
+      roleTitle:"Ingeniero de Software", roleSub:"Full-stack & Backend",
+      lead:"Construyo y despliego sistemas de producción de punta a punta — APIs REST y serverless, datos relacionales y NoSQL, servicios en tiempo real e IA aplicada. Cada proyecto de abajo está en vivo, probado y desplegado con CI/CD.",
+      view:"Ver proyectos",
+      metrics:[["10","Proyectos en vivo"],["4","Motores de datos"],["100%","CI en verde"],["0","Infra pagada"]],
+      secTitle:"Proyectos", secNote:"Cada tarjeta enlaza a la demo en vivo y al código.",
+      all:"Todos", live:"Demo en vivo ↗", code:"Código",
+      devTitle:"Integración continua en cada repositorio",
+      devText:"Cada proyecto incluye un pipeline de GitHub Actions: lint, verificación de tipos, tests y build de imagen Docker. Dos levantan bases de datos reales en CI para verificar invariantes SQL y garantías transaccionales — sin sobreventa en concurrencia. Todos los badges en verde.",
+      footer:"Desplegado en Vercel · Cloudflare · Neon · MongoDB Atlas · Upstash — capa gratuita."
+    }
+  };
+
+  const CATS = {
+    ai:{en:"Applied AI",es:"IA aplicada"},
+    data:{en:"Data",es:"Datos"},
+    cs:{en:"CS Core",es:"Fundamentos"},
+    rt:{en:"Real-time",es:"Tiempo real"},
+    infra:{en:"Infra",es:"Infra"},
+    backend:{en:"Backend",es:"Backend"}
+  };
+
+  const GH = "https://github.com/jersonvillamizar214/";
+  const projects = [
+    { catKey:"ai", flag:{en:"Capstone",es:"Estrella"}, name:"Northwind Ops", repo:"northwind-ops",
+      live:"https://northwind-ops-javf.vercel.app",
+      desc:{ en:"Full-stack operations platform: KPI dashboard from aggregated SQL, inventory CRUD, ACID transactional sales (no overselling under concurrency), a real-time SSE feed and an AI assistant grounded in live data.",
+             es:"Plataforma de operaciones full-stack: dashboard de KPIs desde SQL agregado, CRUD de inventario, ventas transaccionales ACID (sin sobreventa en concurrencia), feed en tiempo real (SSE) y un asistente IA alimentado con datos reales." },
+      tags:["Next.js","PostgreSQL","ACID","SSE","Groq"] },
+    { catKey:"ai", name:"RAG Chat Assistant", repo:"rag-chat-assistant",
+      live:"https://rag-chat-assistant-javf.vercel.app",
+      desc:{ en:"Enterprise assistant that answers only from company docs. Semantic search over pgvector, grounded generation, cited sources — and it refuses to answer when the info isn't there.",
+             es:"Asistente empresarial que responde solo con la documentación de la empresa. Búsqueda semántica sobre pgvector, generación fundamentada con fuentes citadas — y se niega a responder cuando el dato no está." },
+      tags:["pgvector","Gemini","Groq","RAG"] },
+    { catKey:"data", name:"Advanced SQL Sales", repo:"sales-system-sql",
+      live:"https://sales-system-sql-javf.vercel.app",
+      desc:{ en:"Sales system focused on advanced PostgreSQL: normalized schema, and analytics with CTEs, window functions and multi-table JOINs — shown running live on a SQL Insights page.",
+             es:"Sistema de ventas enfocado en PostgreSQL avanzado: esquema normalizado y analítica con CTEs, funciones de ventana y JOINs — mostrado en vivo en una página de SQL Insights." },
+      tags:["PostgreSQL","CTEs","Window fns","Prisma"] },
+    { catKey:"data", name:"NoSQL Catalog", repo:"nosql-catalog",
+      live:"https://nosql-catalog-javf.vercel.app",
+      desc:{ en:"MongoDB documents with a different schema per category, plus a Redis cache you can measure in the UI (~75× faster). Answers the SQL-vs-NoSQL question with a working system.",
+             es:"Documentos MongoDB con un esquema distinto por categoría, más una caché Redis que puedes medir en la interfaz (~75× más rápida). Responde la pregunta SQL vs NoSQL con un sistema real." },
+      tags:["MongoDB","Redis","cache-aside"] },
+    { catKey:"data", name:"KPI Dashboard", repo:"kpi-dashboard",
+      live:"https://kpi-dashboard-javf.vercel.app",
+      desc:{ en:"Business analytics dashboard with KPIs, trends and category breakdowns, rendered with hand-built accessible SVG charts — no chart library.",
+             es:"Dashboard de analítica de negocio con KPIs, tendencias y desglose por categoría, con gráficos SVG accesibles hechos a mano — sin librería de gráficos." },
+      tags:["Next.js","SVG charts","dataviz"] },
+    { catKey:"cs", name:"Algorithms & Big O", repo:"algorithms-visualizer",
+      live:"https://algorithms-visualizer-javf.vercel.app",
+      desc:{ en:"Sorting, pathfinding (BFS/Dijkstra/A*) and data structures from scratch, with Big O measured — not quoted. 54 tests assert the complexity classes empirically.",
+             es:"Ordenamiento, pathfinding (BFS/Dijkstra/A*) y estructuras de datos desde cero, con Big O medido — no citado. 54 tests verifican las clases de complejidad empíricamente." },
+      tags:["TypeScript","Vitest","algorithms"] },
+    { catKey:"rt", name:"IoT MQTT Monitor", repo:"iot-mqtt-monitor",
+      live:"https://iot-mqtt-monitor-javf.vercel.app",
+      desc:{ en:"Real-time industrial monitoring over MQTT: the browser subscribes to plant telemetry via WebSockets, with live trends and threshold alarms.",
+             es:"Monitoreo industrial en tiempo real sobre MQTT: el navegador se suscribe a la telemetría de planta vía WebSockets, con tendencias en vivo y alarmas por umbral." },
+      tags:["MQTT","WebSockets","real-time"] },
+    { catKey:"infra", name:"Serverless URL Shortener", repo:"serverless-url-shortener",
+      live:"https://serverless-url-shortener.jersonvillamizar214.workers.dev",
+      desc:{ en:"Runs entirely at the edge on Cloudflare Workers: KV for redirects, D1 (serverless SQLite) for analytics written after the response via ctx.waitUntil(), and SSRF-safe validation.",
+             es:"Corre íntegramente en el edge de Cloudflare Workers: KV para las redirecciones, D1 (SQLite serverless) para la analítica escrita después de responder con ctx.waitUntil(), y validación anti-SSRF." },
+      tags:["Cloudflare","Workers","KV","D1"] },
+    { catKey:"backend", name:"JWT Auth Dashboard", repo:"jwt-auth-dashboard",
+      live:"https://jwt-auth-dashboard-javf.vercel.app",
+      desc:{ en:"Full-stack authentication: register/login with a role-based protected dashboard. JWT access/refresh tokens in httpOnly cookies, bcrypt hashing, server-side revocation.",
+             es:"Autenticación full-stack: registro/login con un dashboard protegido por roles. Tokens JWT de acceso/refresco en cookies httpOnly, hashing con bcrypt y revocación del lado del servidor." },
+      tags:["Next.js","JWT","bcrypt","Prisma"] },
+    { catKey:"backend", name:"REST API · JWT", repo:"rest-api-jwt-auth",
+      live:"https://rest-api-jwt-auth-javf.vercel.app",
+      desc:{ en:"Production-ready REST API with JWT authentication and a layered architecture — with an interactive playground so you can exercise the endpoints from the browser.",
+             es:"API REST lista para producción con autenticación JWT y arquitectura por capas — con un playground interactivo para probar los endpoints desde el navegador." },
+      tags:["Express","TypeScript","JWT","Prisma"] }
+  ];
+
+  // ---------- state ----------
   const root = document.documentElement;
+  let lang = localStorage.getItem("lang") || (navigator.language||"en").toLowerCase().startsWith("es") ? "es" : "en";
+  if (localStorage.getItem("lang")) lang = localStorage.getItem("lang");
+  let filterKey = "All";
+
+  const grid = document.getElementById("grid");
+  const filters = document.getElementById("filters");
+  const metrics = document.getElementById("metrics");
+
+  function renderGrid(){
+    const t = T[lang];
+    grid.innerHTML = "";
+    projects.filter(p => filterKey === "All" || p.catKey === filterKey).forEach(p => {
+      const el = document.createElement("article");
+      el.className = "card";
+      el.innerHTML =
+        '<a class="thumb" href="'+p.live+'" target="_blank" rel="noopener">' +
+          '<img loading="lazy" src="shots/'+p.repo+'.jpg" alt="'+p.name+'" width="1280" height="800">' +
+        '</a>' +
+        '<div class="card-body">' +
+          '<div class="card-top">' +
+            '<span class="cat mono">'+CATS[p.catKey][lang]+'</span>' +
+            (p.flag ? '<span class="flag mono">'+p.flag[lang]+'</span>' : '') +
+          '</div>' +
+          '<h3>'+p.name+'</h3>' +
+          '<p>'+p.desc[lang]+'</p>' +
+          '<div class="tags mono">'+p.tags.map(x=>'<span class="tag">'+x+'</span>').join('')+'</div>' +
+          '<div class="links">' +
+            '<a class="lk lk-live" href="'+p.live+'" target="_blank" rel="noopener">'+t.live+'</a>' +
+            '<a class="lk lk-code" href="'+GH+p.repo+'" target="_blank" rel="noopener">'+t.code+'</a>' +
+          '</div>' +
+        '</div>';
+      grid.appendChild(el);
+    });
+  }
+
+  function renderFilters(){
+    const t = T[lang];
+    const keys = ["All", ...Array.from(new Set(projects.map(p => p.catKey)))];
+    filters.innerHTML = "";
+    keys.forEach(k => {
+      const b = document.createElement("button");
+      b.className = "chip mono" + (k === filterKey ? " active" : "");
+      b.textContent = k === "All" ? t.all : CATS[k][lang];
+      b.onclick = () => { filterKey = k; renderFilters(); renderGrid(); };
+      filters.appendChild(b);
+    });
+  }
+
+  function applyLang(l){
+    lang = l;
+    localStorage.setItem("lang", l);
+    root.setAttribute("lang", l);
+    const t = T[l];
+    document.getElementById("role-title").textContent = t.roleTitle;
+    document.getElementById("role-sub").textContent = t.roleSub;
+    document.getElementById("lead").textContent = t.lead;
+    document.getElementById("btn-view").textContent = t.view;
+    document.getElementById("sec-title").textContent = t.secTitle;
+    document.getElementById("sec-note").textContent = t.secNote;
+    document.getElementById("devops-title").textContent = t.devTitle;
+    document.getElementById("devops-text").textContent = t.devText;
+    document.getElementById("footer-text").textContent = t.footer;
+    metrics.innerHTML = t.metrics.map(m =>
+      '<div class="metric"><b>'+m[0]+'</b><span>'+m[1]+'</span></div>').join('');
+    document.querySelectorAll("#lang button").forEach(b =>
+      b.classList.toggle("on", b.dataset.lang === l));
+    renderFilters();
+    renderGrid();
+  }
+
+  document.querySelectorAll("#lang button").forEach(b =>
+    b.onclick = () => applyLang(b.dataset.lang));
+
+  // ---------- theme ----------
   const tgl = document.getElementById("theme-toggle");
   const sun = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
   const moon = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
@@ -211,94 +366,7 @@
     paintIcon();
   };
 
-  // ---- Projects ----
-  const GH = "https://github.com/jersonvillamizar214/";
-  const projects = [
-    { cat:"Applied AI", flag:"Capstone", name:"Northwind Ops", repo:"northwind-ops",
-      live:"https://northwind-ops-javf.vercel.app",
-      desc:"Full-stack operations platform: KPI dashboard from aggregated SQL, inventory CRUD, ACID transactional sales (no overselling under concurrency), a real-time SSE feed and an AI assistant grounded in live data.",
-      tags:["Next.js","PostgreSQL","ACID","SSE","Groq"] },
-    { cat:"Applied AI", name:"RAG Chat Assistant", repo:"rag-chat-assistant",
-      live:"https://rag-chat-assistant-javf.vercel.app",
-      desc:"Enterprise assistant that answers only from company docs. Semantic search over pgvector, grounded generation, cited sources — and it refuses to answer when the info isn't there.",
-      tags:["pgvector","Gemini","Groq","RAG"] },
-    { cat:"Data", name:"Advanced SQL Sales", repo:"sales-system-sql",
-      live:"https://sales-system-sql-javf.vercel.app",
-      desc:"Sales system focused on advanced PostgreSQL: normalized schema, and analytics with CTEs, window functions and multi-table JOINs — shown running live on a SQL Insights page.",
-      tags:["PostgreSQL","CTEs","Window fns","Prisma"] },
-    { cat:"Data", name:"NoSQL Catalog", repo:"nosql-catalog",
-      live:"https://nosql-catalog-javf.vercel.app",
-      desc:"MongoDB documents with a different schema per category, plus a Redis cache you can measure in the UI (~75× faster). Answers the SQL-vs-NoSQL question with a working system.",
-      tags:["MongoDB","Redis","cache-aside"] },
-    { cat:"Data", name:"KPI Dashboard", repo:"kpi-dashboard",
-      live:"https://kpi-dashboard-javf.vercel.app",
-      desc:"Business analytics dashboard with KPIs, trends and category breakdowns, rendered with hand-built accessible SVG charts — no chart library.",
-      tags:["Next.js","SVG charts","dataviz"] },
-    { cat:"CS Core", name:"Algorithms & Big O", repo:"algorithms-visualizer",
-      live:"https://algorithms-visualizer-javf.vercel.app",
-      desc:"Sorting, pathfinding (BFS/Dijkstra/A*) and data structures from scratch, with Big O measured — not quoted. 54 tests assert the complexity classes empirically.",
-      tags:["TypeScript","Vitest","algorithms"] },
-    { cat:"Real-time", name:"IoT MQTT Monitor", repo:"iot-mqtt-monitor",
-      live:"https://iot-mqtt-monitor-javf.vercel.app",
-      desc:"Real-time industrial monitoring over MQTT: the browser subscribes to plant telemetry via WebSockets, with live trends and threshold alarms.",
-      tags:["MQTT","WebSockets","real-time"] },
-    { cat:"Infra", name:"Serverless URL Shortener", repo:"serverless-url-shortener",
-      live:"https://serverless-url-shortener.jersonvillamizar214.workers.dev",
-      desc:"Runs entirely at the edge on Cloudflare Workers: KV for redirects, D1 (serverless SQLite) for analytics written after the response via ctx.waitUntil(), and SSRF-safe validation.",
-      tags:["Cloudflare","Workers","KV","D1"] },
-    { cat:"Backend", name:"JWT Auth Dashboard", repo:"jwt-auth-dashboard",
-      live:"https://jwt-auth-dashboard-javf.vercel.app",
-      desc:"Full-stack authentication: register/login with a role-based protected dashboard. JWT access/refresh tokens in httpOnly cookies, bcrypt hashing, server-side revocation.",
-      tags:["Next.js","JWT","bcrypt","Prisma"] },
-    { cat:"Backend", name:"REST API · JWT", repo:"rest-api-jwt-auth",
-      live:"https://rest-api-jwt-auth-javf.vercel.app",
-      desc:"Production-ready REST API with JWT authentication and a layered architecture — with an interactive playground so you can exercise the endpoints from the browser.",
-      tags:["Express","TypeScript","JWT","Prisma"] },
-  ];
-
-  const grid = document.getElementById("grid");
-  const filters = document.getElementById("filters");
-  const cats = ["All", ...Array.from(new Set(projects.map(p => p.cat)))];
-
-  function render(filter){
-    grid.innerHTML = "";
-    projects.filter(p => filter === "All" || p.cat === filter).forEach(p => {
-      const el = document.createElement("article");
-      el.className = "card";
-      el.innerHTML =
-        '<a class="thumb" href="'+p.live+'" target="_blank" rel="noopener">' +
-          '<img loading="lazy" src="shots/'+p.repo+'.jpg" alt="'+p.name+' preview" width="1280" height="800">' +
-        '</a>' +
-        '<div class="card-body">' +
-          '<div class="card-top">' +
-            '<span class="cat mono">'+p.cat+'</span>' +
-            (p.flag ? '<span class="flag mono">'+p.flag+'</span>' : '') +
-          '</div>' +
-          '<h3>'+p.name+'</h3>' +
-          '<p>'+p.desc+'</p>' +
-          '<div class="tags mono">'+p.tags.map(t=>'<span class="tag">'+t+'</span>').join('')+'</div>' +
-          '<div class="links">' +
-            '<a class="lk lk-live" href="'+p.live+'" target="_blank" rel="noopener">Live demo ↗</a>' +
-            '<a class="lk lk-code" href="'+GH+p.repo+'" target="_blank" rel="noopener">Code</a>' +
-          '</div>' +
-        '</div>';
-      grid.appendChild(el);
-    });
-  }
-
-  cats.forEach((c,i) => {
-    const b = document.createElement("button");
-    b.className = "chip mono" + (i===0 ? " active" : "");
-    b.textContent = c;
-    b.onclick = () => {
-      document.querySelectorAll(".chip").forEach(x=>x.classList.remove("active"));
-      b.classList.add("active");
-      render(c);
-    };
-    filters.appendChild(b);
-  });
-
-  render("All");
+  applyLang(lang);
 </script>
 </body>
 </html>
