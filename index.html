@@ -7,9 +7,9 @@
 <meta name="description" content="Software engineer portfolio: 10 production projects across REST APIs, advanced SQL, NoSQL, real-time systems, applied AI and serverless — all live and tested.">
 <script>
   (function(){
+    // Default to light unless the visitor already chose a theme.
     var t = localStorage.getItem("theme");
-    var sysDark = matchMedia("(prefers-color-scheme: dark)").matches;
-    document.documentElement.setAttribute("data-theme", t || (sysDark ? "dark" : "light"));
+    document.documentElement.setAttribute("data-theme", t || "light");
   })();
 </script>
 <style>
@@ -280,8 +280,8 @@
 
   // ---------- state ----------
   const root = document.documentElement;
-  let lang = localStorage.getItem("lang") || (navigator.language||"en").toLowerCase().startsWith("es") ? "es" : "en";
-  if (localStorage.getItem("lang")) lang = localStorage.getItem("lang");
+  // Default to English unless the visitor already chose a language.
+  let lang = localStorage.getItem("lang") || "en";
   let filterKey = "All";
 
   const grid = document.getElementById("grid");
